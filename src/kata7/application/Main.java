@@ -9,15 +9,16 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Main extends JFrame {
-    private final Block block;
-    private final Map<String, Command> commands;
-    
+    private Map<String, Command> commands;
+    private Block block;
+    private BlockPanel blockDisplay;
+    private BlockPresenter blockPresenter;
+
     public static void main(String[] args) {
         new Main().execute();
     }
     
     public Main() {
-        this.block = new Block();
         this.setTitle("Block shifter");
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setSize(718, 780);
@@ -25,17 +26,18 @@ public class Main extends JFrame {
         this.setResizable(false);
         this.getContentPane().add(blockPanel());
         this.add(toolBar(), BorderLayout.SOUTH);
-        this.commands = createCommands();
     }
 
     private void execute() {
+        this.block = new Block(4, 4);
+        this.blockPresenter = new BlockPresenter(block, blockDisplay);
+        this.commands = createCommands();
         this.setVisible(true);
     }
 
     private JPanel blockPanel() {
-        BlockPanel panel = new BlockPanel();
-        panel.display(block);
-        this.block.register(panel);
+        BlockPanel panel = new BlockPanel(Block.MAX);
+        this.blockDisplay = panel;
         return panel;
     }
 

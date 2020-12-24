@@ -1,8 +1,12 @@
 package kata7.view;
 
-import kata7.model.Block;
+public interface BlockDisplay {
+    int SIZE = 100;
 
-public interface BlockDisplay extends Block.Observer {
-    Block block();
-    void display(Block block);
+    void paintBlock(int x, int y);
+    void on(Moved moved);
+
+    interface Moved {
+        void to(int x, int y);
+    }
 }

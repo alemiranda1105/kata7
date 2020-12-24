@@ -9,14 +9,13 @@ public class Block {
     public static final int MAX = 7;
     private int x;
     private int y;
-    private final List<Observer> observers;
+    private final List<Observer> observers = new ArrayList<>();
     
-    public Block() {
-        this.x = 4;
-        this.y = 4;
+    public Block(int x, int y) {
+        this.x = x;
+        this.y = y;
         Timer timer = new Timer();
         timer.schedule(task(), 1000, 500);
-        this.observers = new ArrayList<>();
     }
 
     public int x() {
@@ -51,6 +50,12 @@ public class Block {
         changed();
     }
 
+    public void moveTo(int x, int y) {
+        this.x = x;
+        this.y = y;
+        changed();
+    }
+
     private TimerTask task() {
         return new TimerTask() {
             @Override
@@ -72,7 +77,7 @@ public class Block {
     public void register(Observer observer) {
         observers.add(observer);
     }
-    
+
     public interface Observer {
         void changed();
     }
